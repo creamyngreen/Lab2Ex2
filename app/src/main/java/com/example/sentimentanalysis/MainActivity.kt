@@ -1,12 +1,12 @@
 package com.tuyetmai.maisentimentanalysis
 
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import com.tuyetmai.maisentimentanalysis.R
-import android.graphics.Color
 import android.widget.LinearLayout
 
 class MainActivity : AppCompatActivity() {
@@ -17,20 +17,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var emojiLabel: TextView
     private lateinit var rootLayout: LinearLayout
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        rootLayout = findViewById(R.id.rootLayout)
 
+        rootLayout = findViewById(R.id.rootLayout)
         inputText = findViewById(R.id.etInput)
         btnAnalyze = findViewById(R.id.btnSubmit)
         resultLabel = findViewById(R.id.resultLabel)
         emojiLabel = findViewById(R.id.tvEmoji)
 
-        // Chỉnh sửa baseUrl nếu cần
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.1.18:5000/") // Địa chỉ của Flask server
+            .baseUrl("http://192.168.1.2:5000/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -38,12 +36,18 @@ class MainActivity : AppCompatActivity() {
 
         btnAnalyze.setOnClickListener {
             val text = inputText.text.toString()
+
             if (text.isBlank()) {
                 Toast.makeText(this, "Vui lòng nhập văn bản", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Gửi dữ liệu dưới dạng JSON tới API
+            // Clear previous result
+            resultLabel.text = ""
+            emojiLabel.text = ""
+
+            Toast.makeText(this, "Đang phân tích...", Toast.LENGTH_SHORT).show()
+
             api.analyzeSentiment(RequestBody(text)).enqueue(object : Callback<SentimentResponse> {
                 override fun onResponse(
                     call: Call<SentimentResponse>,
@@ -52,40 +56,41 @@ class MainActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val sentiment = response.body()
                         resultLabel.text = "Kết quả: ${sentiment?.label} (${sentiment?.confidence})"
-
-                        when (sentiment?.label) {
-                            "positive" -> {
-                                emojiLabel.text = "😊"
-                                rootLayout.setBackgroundColor(Color.parseColor("#00C853")) // xa lánh iu đời
-                            }
-                            "neutral" -> {
-                                emojiLabel.text = "😐"
-                                rootLayout.setBackgroundColor(Color.parseColor("#F5B7B1")) // hồng pát teo
-                            }
-                            "negative" -> {
-                                emojiLabel.text = "😞"
-                                rootLayout.setBackgroundColor(Color.parseColor("#8B0000")) // đỏ rực lửa
-                            }
-                            else -> {
-                                emojiLabel.text = "🤔"
-                                rootLayout.setBackgroundColor(Color.GRAY)
-                            }
-                        }
-
-
+                        updateUIBasedOnSentiment(sentiment?.label)
                     } else {
                         resultLabel.text = "Lỗi: Không thể phân tích"
                         emojiLabel.text = "🤔"
-                        resultLabel.setBackgroundColor(resources.getColor(android.R.color.darker_gray))
+                        rootLayout.setBackgroundColor(Color.GRAY)
                     }
-
                 }
 
                 override fun onFailure(call: Call<SentimentResponse>, t: Throwable) {
                     resultLabel.text = "Lỗi kết nối: ${t.message}"
-                    emojiLabel.text = "😞"  // Mặt buồn nếu gặp lỗi kết nối
+                    emojiLabel.text = "😞"
+                    rootLayout.setBackgroundColor(Color.GRAY)
                 }
             })
+        }
+    }
+
+    private fun updateUIBasedOnSentiment(label: String?) {
+        when (label) {
+            "positive" -> {
+                emojiLabel.text = "😊"
+                rootLayout.setBackgroundColor(Color.parseColor("#00C853"))
+            }
+            "neutral" -> {
+                emojiLabel.text = "😐"
+                rootLayout.setBackgroundColor(Color.parseColor("#808080"))
+            }
+            "negative" -> {
+                emojiLabel.text = "😞"
+                rootLayout.setBackgroundColor(Color.parseColor("#8B0000"))
+            }
+            else -> {
+                emojiLabel.text = "🤔"
+                rootLayout.setBackgroundColor(Color.GRAY)
+            }
         }
     }
 }
