@@ -1,4 +1,4 @@
-package com.tuyetmai.maisentimentanalysis
+package com.example.sentimentanalysis
 
 import org.junit.Test
 

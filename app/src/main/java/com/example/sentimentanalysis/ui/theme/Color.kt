@@ -1,4 +1,4 @@
-package com.tuyetmai.maisentimentanalysis.ui.theme
+package com.example.sentimentanalysis.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

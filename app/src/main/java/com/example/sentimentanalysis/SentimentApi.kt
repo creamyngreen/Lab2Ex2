@@ -1,4 +1,4 @@
-package com.tuyetmai.maisentimentanalysis
+package com.example.sentimentanalysis
 
 import retrofit2.Call
 import retrofit2.http.Body

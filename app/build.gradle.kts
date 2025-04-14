@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.tuyetmai.maisentimentanalysis"
+    namespace = "com.example.sentimentanalysis"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.tuyetmai.maisentimentanalysis"
+        applicationId = "com.example.sentimentanalysis"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

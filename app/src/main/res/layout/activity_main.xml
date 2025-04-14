@@ -5,52 +5,61 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="@color/green">
+    android:background="@color/green"
+    android:padding="24dp">
 
-    <!-- Tiêu đề -->
+
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sentiment"
-        android:textSize="24sp"
+        android:textSize="28sp"
+        android:textStyle="bold"
         android:textColor="@android:color/white"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="30dp" />
 
-    <!-- Ô nhập văn bản -->
+
     <EditText
         android:id="@+id/etInput"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter text"
-        android:background="@android:color/white"
-        android:padding="10dp" />
+        android:background="@android:drawable/editbox_background_normal"
+        android:padding="12dp"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:layout_marginBottom="20dp" />
 
-    <!-- Nút Submit -->
+
     <Button
         android:id="@+id/btnSubmit"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Submit"
-        android:layout_marginTop="20dp"/>
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:padding="12dp"
+        android:layout_marginBottom="20dp" />
 
-    <!-- Emoji -->
+
     <TextView
         android:id="@+id/resultLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textColor="@android:color/white"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="10dp" />
+
 
     <TextView
         android:id="@+id/tvEmoji"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="😊"
-        android:textSize="50sp"
-        android:layout_marginTop="30dp"/>
-
+        android:textSize="60sp"
+        android:layout_marginTop="20dp" />
 
 </LinearLayout>

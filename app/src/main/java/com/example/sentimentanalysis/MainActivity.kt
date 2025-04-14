@@ -1,4 +1,4 @@
-package com.tuyetmai.maisentimentanalysis
+package com.example.sentimentanalysis
 
 import android.graphics.Color
 import android.os.Bundle
@@ -6,7 +6,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
-import com.tuyetmai.maisentimentanalysis.R
+import com.example.sentimentanalysis.R
 import android.widget.LinearLayout
 
 class MainActivity : AppCompatActivity() {
